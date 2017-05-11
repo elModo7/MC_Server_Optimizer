@@ -1,0 +1,39 @@
+; No mostrar tray icon
+#NoTrayIcon
+
+; Icono antiguo (cmd)
+; Ico :="C:\Windows\System32\cmd.exe" 
+; Menu,Tray,Icon,%Ico%
+
+; Nuevo Icono (SOLO FUNCIONA tras compilar en EXE CON ICONO)
+Menu, Tray, Icon, %A_ScriptFullPath%
+
+; Comenzamos programa GUI
+Gui, Add, DropDownList, vdropdownCPU x144 y13 w120 , 1|2|4|8
+Gui, Add, Text, x21 y16 w110 h13, Dedicated CPU Cores
+Gui, Add, Button, vCompilarBtn Default x290 y45 w150 h23 gCompilar, Generte Launcher
+Gui, Add, DropDownList, vdropdownRAM x144 y46 w120 , 512|1024|2048|4096|8192
+Gui, Add, Text, x27 y51 w100 h13, Dedicated RAM
+Gui, Add, Text, x45 y85 w100 h13, Server File
+Gui, Add, Edit, vfileName x145 y80 w120 h20 , Spigot.jar
+
+; Mostrar GUI
+Gui, Show, w461 h115, Minecraft Server Optimizer by elModo7
+return
+
+; Programa no GUI
+Compilar:
+{
+Gui, submit, NoHide
+GuiControlGet, dropdownCPU
+GuiControlGet, dropdownRAM
+GuiControlGet, fileName
+; Export to file (Borra y luego escribe)
+FileDelete, %A_ScriptDir%\start.bat
+FileAppend,java -server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSIncrementalPacing -XX:ParallelGCThreads=%dropdownCPU% -XX:+AggressiveOpts -Xms%dropdownRAM%M -Xmx%dropdownRAM%M -jar %fileName% nogui, %A_ScriptDir%\start.bat
+msgbox, Server initializer created succesfully! Check program folder.
+}return
+
+; Cerrar GUI
+GuiClose:
+ExitApp
