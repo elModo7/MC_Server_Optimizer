@@ -4,7 +4,7 @@
 ; Ico :="C:\Windows\System32\cmd.exe" 
 ; Menu,Tray,Icon,%Ico%
 
-; New Icon (SOLO FUNCIONA tras compilar en EXE CON ICONO)
+; New Icon (Just works if you compile with the icon file)
 ; Menu, Tray, Icon, %A_ScriptFullPath%
 
 ; Start GUI program
